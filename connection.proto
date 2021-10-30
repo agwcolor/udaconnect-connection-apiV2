@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+message ConnectionMessage {
+ int32 person_id = 1;
+ string start_date = 2;
+ string end_date = 3;
+ int32 meters = 4;
+}
+
+message Empty {
+
+}
+
+message ConnectionMessageList {
+  repeated ConnectionMessage connections = 1;
+}
+
+service ConnectionService {
+    rpc Create(ConnectionMessage) returns (ConnectionMessage);
+    rpc GetConnection(Empty) returns (ConnectionMessageList);
+}

@@ -1,0 +1,9 @@
+build
+.dockerignore
+Dockerfile
+Dockerfile.prod
+setup.sh
+requirements_old.txt
+**/.venv
+**/__pycache__
+**/.git
