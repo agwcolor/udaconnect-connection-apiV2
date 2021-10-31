@@ -15,14 +15,16 @@ def create_app(env=None):
     from app.config import config_by_name
 
     app = Flask(__name__)
-    app.config.from_object(config_by_name[env or "test"])
+    with app.app_context():
 
-    CORS(app)  # Set CORS for development
-    db.init_app(app)
+        app.config.from_object(config_by_name[env or "test"])
+
+        CORS(app)  # Set CORS for development
+        db.init_app(app)
         
-    @app.route("/health")
-    def health():
-        return jsonify("healthy")
-    grpc_server.serve()
+        @app.route("/health")
+        def health():
+            return jsonify("healthy")
+        grpc_server.serve()
 
-    return app
+        return app

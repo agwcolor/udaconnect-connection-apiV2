@@ -1,16 +1,16 @@
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List
-# from app import db
+# import app import db    -- doesn't work
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, jsonify, request, g, Response
+from flask import Flask, jsonify, request, g, Response, current_app
 
 
 from app.models import Connection, Location, Person
 from sqlalchemy.sql import text
 
 logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger("udaconnect-connection-api")
+# logger = logging.getLogger("udaconnect-connection-api")
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://postgres:postgres@localhost:5432/geoconnections"
 db = SQLAlchemy(app)
@@ -32,14 +32,26 @@ class ConnectionService:
             Location.creation_time >= start_date
         ).all()
 
-        # print(locations)
-
+        print("Locations :", type(locations))
+        print(locations[0].person_id, locations[0].coordinate, locations[0].creation_time)
+        
+        my_persons = {person.id: person for person in PersonService.retrieve_all()}
+        print(my_persons)
+        
         # Cache all users in memory for quick lookup
         person_map: Dict[str, Person] = {person.id: person for person in PersonService.retrieve_all()}
 
+        print("person_map :", person_map)
         # Prepare arguments for queries
         data = []
         for location in locations:
+            print("Data :", "person_id", person_id,
+                    "longitude", location.longitude,
+                    "latitude", location.latitude,
+                    "meters", meters,
+                    "start_date", start_date.strftime("%Y-%m-%d"),
+                    "end_date", (end_date + timedelta(days=1)).strftime("%Y-%m-%d"),)
+            
             data.append(
                 {
                     "person_id": person_id,
@@ -50,7 +62,7 @@ class ConnectionService:
                     "end_date": (end_date + timedelta(days=1)).strftime("%Y-%m-%d"),
                 }
             )
-
+        print("Data : ", data)
         query = text(
             """
         SELECT  person_id, id, ST_X(coordinate), ST_Y(coordinate), creation_time

@@ -9,9 +9,9 @@ from app.services import ConnectionService
 from typing import Optional, List
 
 import grpc
-from . import grpc_server
-from . import connection_pb2
-from . import connection_pb2_grpc
+# from . import grpc_server
+from app import connection_pb2
+from app import connection_pb2_grpc
 import logging
 from grpc_reflection.v1alpha import reflection
 import sys
@@ -70,7 +70,7 @@ class ConnectionDataResource(connection_pb2_grpc.ConnectionServiceServicer):
         return result
 
 
-grpc_server.serve()
+# grpc_server.serve()
 '''
 # Initialize gRPC server
 def serve():
