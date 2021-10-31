@@ -1,20 +1,20 @@
 import sys, os
+import logging
+import grpc
+import time
+
 # sys.path.append('/path/to/2014_07_13_test')
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 from datetime import datetime
-import time
 from concurrent import futures
 from app.services import ConnectionService
 from typing import Optional, List
 
-import grpc
 # from . import grpc_server
 from app import connection_pb2
 from app import connection_pb2_grpc
-import logging
 from grpc_reflection.v1alpha import reflection
-import sys
 
 print(basedir, " is the path")
 
@@ -25,14 +25,15 @@ DATE_FORMAT = "%Y-%m-%d"
 # noqa
 logging.basicConfig(level=logging.INFO)
 
+
 class ConnectionDataResource(connection_pb2_grpc.ConnectionServiceServicer):
     def GetConnection(self, request, context):
 
-        person_id=request.person_id
-        start_date=datetime.strptime(
+        person_id = request.person_id
+        start_date = datetime.strptime(
             request.start_date, DATE_FORMAT)
-        end_date=datetime.strptime(request.end_date, DATE_FORMAT)
-        meters=request.meters
+        end_date = datetime.strptime(request.end_date, DATE_FORMAT)
+        meters = request.meters
 
         results = ConnectionService.find_contacts(
             person_id=person_id,
@@ -54,7 +55,7 @@ class ConnectionDataResource(connection_pb2_grpc.ConnectionServiceServicer):
             end_date="2020-12-30",
             meters=5
         )
-        
+
         item_3 = connection_pb2.ConnectionMessage(
             person_id=5,
             start_date="2020-1-1",

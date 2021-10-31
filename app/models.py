@@ -11,11 +11,13 @@ from flask_sqlalchemy import SQLAlchemy
 from geoalchemy2 import Geometry
 from geoalchemy2.shape import to_shape
 from shapely.geometry.point import Point
-from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, Integer, String
+from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, \
+    Integer, String
 from sqlalchemy.ext.hybrid import hybrid_property
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://postgres:postgres@localhost:5432/geoconnections"
+app.config['SQLALCHEMY_DATABASE_URI'] = \
+    "postgres://postgres:postgres@localhost:5432/geoconnections"
 db = SQLAlchemy(app)
 
 class Person(db.Model):
@@ -56,12 +58,12 @@ class Location(db.Model):
     @hybrid_property
     def longitude(self) -> str:
         coord_text = self.wkt_shape
-        return coord_text[coord_text.find(" ") + 1 : coord_text.find(")")]
+        return coord_text[coord_text.find(" ") + 1: coord_text.find(")")]
 
     @hybrid_property
     def latitude(self) -> str:
         coord_text = self.wkt_shape
-        return coord_text[coord_text.find("(") + 1 : coord_text.find(" ")]
+        return coord_text[coord_text.find("(") + 1: coord_text.find(" ")]
 
 
 @dataclass
