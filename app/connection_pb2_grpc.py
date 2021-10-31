@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import connection_pb2 as connection__pb2
+from . import connection_pb2 as connection__pb2
 
 
 class ConnectionServiceStub(object):

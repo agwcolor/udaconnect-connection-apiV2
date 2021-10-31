@@ -1,14 +1,19 @@
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List
+# from app import db
+from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, jsonify, request, g, Response
 
-from app import db
-from app.udaconnect.models import Connection, Location, Person
+
+from app.models import Connection, Location, Person
 from sqlalchemy.sql import text
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("udaconnect-connection-api")
-
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://postgres:postgres@localhost:5432/geoconnections"
+db = SQLAlchemy(app)
 
 class ConnectionService:
     @staticmethod

@@ -1,14 +1,22 @@
+import sys, os
+# sys.path.append('/path/to/2014_07_13_test')
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 from datetime import datetime
 import time
 from concurrent import futures
-from app.udaconnect.services import ConnectionService
+from app.services import ConnectionService
 from typing import Optional, List
+
 import grpc
 from . import grpc_server
 from . import connection_pb2
 from . import connection_pb2_grpc
 import logging
 from grpc_reflection.v1alpha import reflection
+import sys
+
+print(basedir, " is the path")
 
 
 DATE_FORMAT = "%Y-%m-%d"
