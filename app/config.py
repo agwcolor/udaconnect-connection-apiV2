@@ -1,5 +1,4 @@
 import os
-os.path.abspath(os.path.dirname(__file__))
 from typing import List, Type
 
 DB_USERNAME = os.environ["DB_USERNAME"]

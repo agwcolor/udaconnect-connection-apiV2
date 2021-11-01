@@ -4,19 +4,21 @@ import grpc
 import time
 
 # sys.path.append('/path/to/2014_07_13_test')
-basedir = os.path.abspath(os.path.dirname(__file__))
+# basedir = os.path.abspath(os.path.dirname(__file__))
 
 from datetime import datetime
 from concurrent import futures
+from app.schemas import ConnectionSchema
 from app.services import ConnectionService
 from typing import Optional, List
+from flask_accepts import responds
 
 # from . import grpc_server
 from app import connection_pb2
 from app import connection_pb2_grpc
 from grpc_reflection.v1alpha import reflection
 
-print(basedir, " is the path")
+# print(basedir, " is the path")
 
 
 DATE_FORMAT = "%Y-%m-%d"
@@ -27,8 +29,8 @@ logging.basicConfig(level=logging.INFO)
 
 
 class ConnectionDataResource(connection_pb2_grpc.ConnectionServiceServicer):
+    @responds(schema=ConnectionSchema, many=True)
     def GetConnection(self, request, context):
-
         person_id = request.person_id
         start_date = datetime.strptime(
             request.start_date, DATE_FORMAT)

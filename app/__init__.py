@@ -3,10 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from . import grpc_server
 
-import os
-print(os.path.abspath(os.path.dirname(__file__)))
-
-
 db = SQLAlchemy()
 
 
@@ -21,7 +17,7 @@ def create_app(env=None):
 
         CORS(app)  # Set CORS for development
         db.init_app(app)
-        
+
         @app.route("/health")
         def health():
             return jsonify("healthy")
