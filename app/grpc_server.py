@@ -6,6 +6,7 @@ from . import connection_pb2
 from . import connection_pb2_grpc
 from . controllers import ConnectionDataResource
 from grpc_reflection.v1alpha import reflection
+# from app import app
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
@@ -23,4 +24,5 @@ def serve():
 
 
 if __name__ == '__main__':
-    serve()
+    with app.app_context():
+        serve()

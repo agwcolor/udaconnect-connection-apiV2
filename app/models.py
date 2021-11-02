@@ -2,17 +2,15 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from app import db  # noqa
 from flask import Flask, jsonify, g
 from flask_sqlalchemy import SQLAlchemy
-
-
 from geoalchemy2 import Geometry
 from geoalchemy2.shape import to_shape
 from shapely.geometry.point import Point
 from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, \
     Integer, String
 from sqlalchemy.ext.hybrid import hybrid_property
+from app.common import db
 
 
 class Person(db.Model):

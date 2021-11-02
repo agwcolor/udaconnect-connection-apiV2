@@ -2,15 +2,16 @@ from flask import Flask, jsonify, request, g, Response
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from . import grpc_server
+from common import db
 
-db = SQLAlchemy()
+# db = SQLAlchemy()
 
 
 def create_app(env=None):
-    #grpc_server.serve()
+    # grpc_server.serve()
     from app.config import config_by_name
 
-    app = Flask(__name__)
+    app = Flask(__name__, instance_relative_config=True)
     with app.app_context():
 
         app.config.from_object(config_by_name[env or "test"])

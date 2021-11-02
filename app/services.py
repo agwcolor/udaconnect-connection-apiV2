@@ -1,9 +1,10 @@
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List
-from app import db
+# from app import db
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, jsonify, request, g, Response, current_app
+from sqlalchemy import sql
 
 
 from app.models import Connection, Location, Person
@@ -12,6 +13,8 @@ from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
 
 logging.basicConfig(level=logging.DEBUG)
+
+db = SQLAlchemy()
 
 
 class ConnectionService:

@@ -17,6 +17,7 @@ from flask_accepts import responds
 from app import connection_pb2
 from app import connection_pb2_grpc
 from grpc_reflection.v1alpha import reflection
+import app
 
 # print(basedir, " is the path")
 
@@ -36,41 +37,20 @@ class ConnectionDataResource(connection_pb2_grpc.ConnectionServiceServicer):
             request.start_date, DATE_FORMAT)
         end_date = datetime.strptime(request.end_date, DATE_FORMAT)
         meters = request.meters
+        with app.app_context():
+            results = ConnectionService.find_contacts(
+                person_id=person_id,
+                start_date=start_date,
+                end_date=end_date,
+                meters=meters,
+            )
 
-        results = ConnectionService.find_contacts(
-            person_id=person_id,
-            start_date=start_date,
-            end_date=end_date,
-            meters=meters,
-        )
-        '''
-        item_1 = connection_pb2.ConnectionMessage(
-            person_id=5,
-            start_date="2020-1-1",
-            end_date="2020-12-30",
-            meters=5
-        )
-
-        item_2 = connection_pb2.ConnectionMessage(
-            person_id=5,
-            start_date="2020-1-1",
-            end_date="2020-12-30",
-            meters=5
-        )
-
-        item_3 = connection_pb2.ConnectionMessage(
-            person_id=5,
-            start_date="2020-1-1",
-            end_date="2020-12-30",
-            meters=5
-        )
-        '''
-        print("Hello there")
-        result = connection_pb2.ConnectionMessageList()
-        result.connections.extend(results)
-        # results = request.person_id
-        print(result, "These are the results returned from gRPC call to ConnectionService")
-        return result
+            print("Hello there")
+            result = connection_pb2.ConnectionMessageList()
+            result.connections.extend(results)
+            # results = request.person_id
+            print(result, "These are the results returned from gRPC call to ConnectionService")
+            return result
 
 
 # grpc_server.serve()
@@ -93,4 +73,30 @@ def serve():
     server.wait_for_termination()
 
 serve()
+
+
+////// Dummy Data
+
+
+        item_1 = connection_pb2.ConnectionMessage(
+            person_id=5,
+            start_date="2020-1-1",
+            end_date="2020-12-30",
+            meters=5
+        )
+
+        item_2 = connection_pb2.ConnectionMessage(
+            person_id=5,
+            start_date="2020-1-1",
+            end_date="2020-12-30",
+            meters=5
+        )
+
+        item_3 = connection_pb2.ConnectionMessage(
+            person_id=5,
+            start_date="2020-1-1",
+            end_date="2020-12-30",
+            meters=5
+        )
+        
 '''
