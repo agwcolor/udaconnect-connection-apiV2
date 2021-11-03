@@ -1,0 +1,42 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+
+message ConnectionMessage {
+ int32 person_id = 1;
+ string start_date = 2;
+ string end_date = 3;
+ int32 meters = 4;
+}
+
+message Empty {
+
+}
+
+message Location {
+  string longitude = 1;
+  int32 person_id = 2;
+  string latitude = 3;
+  google.protobuf.Timestamp creation_time = 4;
+  int32 id = 5;
+}
+
+message Person {
+  string company_name = 1;
+  string first_name = 2;
+  int32 id = 3;
+  string last_name = 4;
+}
+
+message Connection {
+  Location location = 1;
+  Person person = 2;
+}
+
+message ConnectionMessageList {
+  repeated Connection connections = 1;
+}
+
+service ConnectionService {
+    rpc GetConnection(ConnectionMessage) returns (ConnectionMessageList);
+}

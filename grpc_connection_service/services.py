@@ -56,23 +56,23 @@ class ConnectionService:
             Location.creation_time >= start_date
         ).all()
 
-        print("Locations :", locations)
-        print(locations[0].person_id,
-              locations[0].coordinate,
-              locations[0].creation_time)
-        print("LONGITUDE: ==> ", locations[0].longitude)
+        # print("Locations :", locations)
+        # print(locations[0].person_id,
+        #      locations[0].coordinate,
+         #     locations[0].creation_time)
+        # print("LONGITUDE: ==> ", locations[0].longitude)
 
         my_persons = {person.id: person for person in PersonService.
                       retrieve_all()}
-        print("my_persons: ", my_persons)
-        print("1 person's data: ", my_persons[5].id, my_persons[5].first_name,
-              my_persons[5].last_name, my_persons[5].company_name)
-        print("my_persons keys :", *my_persons.keys())
+        # print("my_persons: ", my_persons)
+        # print("1 person's data: ", my_persons[5].id, my_persons[5].first_name,
+              # my_persons[5].last_name, my_persons[5].company_name)
+        # print("my_persons keys :", *my_persons.keys())
         # Cache all users in memory for quick lookup
         person_map: Dict[str, Person] = {person.id: person for person in
                                          PersonService.retrieve_all()}
 
-        print("person_map :", person_map)
+        # print("person_map :", person_map)
         # Prepare arguments for queries
         data = []
         for location in locations:
@@ -81,9 +81,9 @@ class ConnectionService:
                   "longitude", location.longitude,
                   "latitude", location.latitude,
                   "meters", meters,
-                  "start_date", start_date.strftime("%Y-%m-%d"),
-                  "end_date", (end_date + timedelta(days=1)).
-                  strftime("%Y-%m-%d"),)
+                  "start_date", type(start_date.strftime("%Y-%m-%d")),
+                  "end_date", type((end_date + timedelta(days=1)).
+                  strftime("%Y-%m-%d")),)
 
             data.append(
                 {
@@ -96,7 +96,7 @@ class ConnectionService:
                     strftime("%Y-%m-%d"),
                 }
             )
-        print("Data : ", data)
+        # print("Data : ", data)
         query = text(
             """
         SELECT  person_id, id, ST_X(coordinate), ST_Y(coordinate), creation_time
@@ -122,6 +122,7 @@ class ConnectionService:
                     creation_time=exposed_time,
                 )
                 location.set_wkt_with_coords(exposed_lat, exposed_long)
+                # print(type(location.creation_time))
 
                 result.append(
                     Connection(

@@ -11,6 +11,7 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -19,8 +20,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x10\x63onnection.proto\"\\\n\x11\x43onnectionMessage\x12\x11\n\tperson_id\x18\x01 \x01(\x05\x12\x12\n\nstart_date\x18\x02 \x01(\t\x12\x10\n\x08\x65nd_date\x18\x03 \x01(\t\x12\x0e\n\x06meters\x18\x04 \x01(\x05\"\x07\n\x05\x45mpty\"e\n\x08Location\x12\x11\n\tlongitude\x18\x01 \x01(\t\x12\x11\n\tperson_id\x18\x02 \x01(\x05\x12\x10\n\x08latitude\x18\x03 \x01(\t\x12\x15\n\rcreation_time\x18\x04 \x01(\t\x12\n\n\x02id\x18\x05 \x01(\x05\"Q\n\x06Person\x12\x14\n\x0c\x63ompany_name\x18\x01 \x01(\t\x12\x12\n\nfirst_name\x18\x02 \x01(\t\x12\n\n\x02id\x18\x03 \x01(\x05\x12\x11\n\tlast_name\x18\x04 \x01(\t\"J\n\x12\x43onnectionResponse\x12\x1b\n\x08location\x18\x01 \x01(\x0b\x32\t.Location\x12\x17\n\x06person\x18\x02 \x01(\x0b\x32\x07.Person\"A\n\x15\x43onnectionMessageList\x12(\n\x0b\x63onnections\x18\x01 \x03(\x0b\x32\x13.ConnectionResponse2M\n\x11\x43onnectionService\x12\x38\n\rGetConnection\x12\x12.ConnectionMessage\x1a\x13.ConnectionResponseb\x06proto3'
-)
+  serialized_pb=b'\n\x10\x63onnection.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\\\n\x11\x43onnectionMessage\x12\x11\n\tperson_id\x18\x01 \x01(\x05\x12\x12\n\nstart_date\x18\x02 \x01(\t\x12\x10\n\x08\x65nd_date\x18\x03 \x01(\t\x12\x0e\n\x06meters\x18\x04 \x01(\x05\"\x07\n\x05\x45mpty\"\x81\x01\n\x08Location\x12\x11\n\tlongitude\x18\x01 \x01(\t\x12\x11\n\tperson_id\x18\x02 \x01(\x05\x12\x10\n\x08latitude\x18\x03 \x01(\t\x12\x31\n\rcreation_time\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\n\n\x02id\x18\x05 \x01(\x05\"Q\n\x06Person\x12\x14\n\x0c\x63ompany_name\x18\x01 \x01(\t\x12\x12\n\nfirst_name\x18\x02 \x01(\t\x12\n\n\x02id\x18\x03 \x01(\x05\x12\x11\n\tlast_name\x18\x04 \x01(\t\"B\n\nConnection\x12\x1b\n\x08location\x18\x01 \x01(\x0b\x32\t.Location\x12\x17\n\x06person\x18\x02 \x01(\x0b\x32\x07.Person\"9\n\x15\x43onnectionMessageList\x12 \n\x0b\x63onnections\x18\x01 \x03(\x0b\x32\x0b.Connection2P\n\x11\x43onnectionService\x12;\n\rGetConnection\x12\x12.ConnectionMessage\x1a\x16.ConnectionMessageListb\x06proto3'
+  ,
+  dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
 
 
@@ -73,8 +75,8 @@ _CONNECTIONMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=20,
-  serialized_end=112,
+  serialized_start=53,
+  serialized_end=145,
 )
 
 
@@ -98,8 +100,8 @@ _EMPTY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=114,
-  serialized_end=121,
+  serialized_start=147,
+  serialized_end=154,
 )
 
 
@@ -134,8 +136,8 @@ _LOCATION = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='creation_time', full_name='Location.creation_time', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -158,8 +160,8 @@ _LOCATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=123,
-  serialized_end=224,
+  serialized_start=157,
+  serialized_end=286,
 )
 
 
@@ -211,28 +213,28 @@ _PERSON = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=226,
-  serialized_end=307,
+  serialized_start=288,
+  serialized_end=369,
 )
 
 
-_CONNECTIONRESPONSE = _descriptor.Descriptor(
-  name='ConnectionResponse',
-  full_name='ConnectionResponse',
+_CONNECTION = _descriptor.Descriptor(
+  name='Connection',
+  full_name='Connection',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='location', full_name='ConnectionResponse.location', index=0,
+      name='location', full_name='Connection.location', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='person', full_name='ConnectionResponse.person', index=1,
+      name='person', full_name='Connection.person', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -250,8 +252,8 @@ _CONNECTIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=309,
-  serialized_end=383,
+  serialized_start=371,
+  serialized_end=437,
 )
 
 
@@ -282,18 +284,19 @@ _CONNECTIONMESSAGELIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=385,
-  serialized_end=450,
+  serialized_start=439,
+  serialized_end=496,
 )
 
-_CONNECTIONRESPONSE.fields_by_name['location'].message_type = _LOCATION
-_CONNECTIONRESPONSE.fields_by_name['person'].message_type = _PERSON
-_CONNECTIONMESSAGELIST.fields_by_name['connections'].message_type = _CONNECTIONRESPONSE
+_LOCATION.fields_by_name['creation_time'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
+_CONNECTION.fields_by_name['location'].message_type = _LOCATION
+_CONNECTION.fields_by_name['person'].message_type = _PERSON
+_CONNECTIONMESSAGELIST.fields_by_name['connections'].message_type = _CONNECTION
 DESCRIPTOR.message_types_by_name['ConnectionMessage'] = _CONNECTIONMESSAGE
 DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
 DESCRIPTOR.message_types_by_name['Location'] = _LOCATION
 DESCRIPTOR.message_types_by_name['Person'] = _PERSON
-DESCRIPTOR.message_types_by_name['ConnectionResponse'] = _CONNECTIONRESPONSE
+DESCRIPTOR.message_types_by_name['Connection'] = _CONNECTION
 DESCRIPTOR.message_types_by_name['ConnectionMessageList'] = _CONNECTIONMESSAGELIST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -325,12 +328,12 @@ Person = _reflection.GeneratedProtocolMessageType('Person', (_message.Message,),
   })
 _sym_db.RegisterMessage(Person)
 
-ConnectionResponse = _reflection.GeneratedProtocolMessageType('ConnectionResponse', (_message.Message,), {
-  'DESCRIPTOR' : _CONNECTIONRESPONSE,
+Connection = _reflection.GeneratedProtocolMessageType('Connection', (_message.Message,), {
+  'DESCRIPTOR' : _CONNECTION,
   '__module__' : 'connection_pb2'
-  # @@protoc_insertion_point(class_scope:ConnectionResponse)
+  # @@protoc_insertion_point(class_scope:Connection)
   })
-_sym_db.RegisterMessage(ConnectionResponse)
+_sym_db.RegisterMessage(Connection)
 
 ConnectionMessageList = _reflection.GeneratedProtocolMessageType('ConnectionMessageList', (_message.Message,), {
   'DESCRIPTOR' : _CONNECTIONMESSAGELIST,
@@ -348,8 +351,8 @@ _CONNECTIONSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=452,
-  serialized_end=529,
+  serialized_start=498,
+  serialized_end=578,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetConnection',
@@ -357,7 +360,7 @@ _CONNECTIONSERVICE = _descriptor.ServiceDescriptor(
     index=0,
     containing_service=None,
     input_type=_CONNECTIONMESSAGE,
-    output_type=_CONNECTIONRESPONSE,
+    output_type=_CONNECTIONMESSAGELIST,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

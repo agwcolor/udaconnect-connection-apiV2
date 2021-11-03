@@ -17,7 +17,7 @@ class ConnectionServiceStub(object):
         self.GetConnection = channel.unary_unary(
                 '/ConnectionService/GetConnection',
                 request_serializer=connection__pb2.ConnectionMessage.SerializeToString,
-                response_deserializer=connection__pb2.ConnectionResponse.FromString,
+                response_deserializer=connection__pb2.ConnectionMessageList.FromString,
                 )
 
 
@@ -36,7 +36,7 @@ def add_ConnectionServiceServicer_to_server(servicer, server):
             'GetConnection': grpc.unary_unary_rpc_method_handler(
                     servicer.GetConnection,
                     request_deserializer=connection__pb2.ConnectionMessage.FromString,
-                    response_serializer=connection__pb2.ConnectionResponse.SerializeToString,
+                    response_serializer=connection__pb2.ConnectionMessageList.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -60,6 +60,6 @@ class ConnectionService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ConnectionService/GetConnection',
             connection__pb2.ConnectionMessage.SerializeToString,
-            connection__pb2.ConnectionResponse.FromString,
+            connection__pb2.ConnectionMessageList.FromString,
             options, channel_credentials,
             call_credentials, compression, wait_for_ready, timeout, metadata)
