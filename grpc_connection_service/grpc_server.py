@@ -2,11 +2,10 @@
 import grpc
 import logging
 from concurrent import futures
-from . import connection_pb2
-from . import connection_pb2_grpc
-from . controllers import ConnectionDataResource
+import app.connection_pb2 as connection_pb2
+import app.connection_pb2_grpc as connection_pb2_grpc
+from app.controllers import ConnectionDataResource
 from grpc_reflection.v1alpha import reflection
-# from app import app
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
@@ -21,8 +20,8 @@ def serve():
     server.add_insecure_port("[::]:5005")
     server.start()
     server.wait_for_termination()
-
+'''
 
 if __name__ == '__main__':
-    with app.app_context():
-        serve()
+    serve()
+'''

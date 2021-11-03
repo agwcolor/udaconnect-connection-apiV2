@@ -1,80 +1,66 @@
-import sys, os
 import logging
 import grpc
 import time
-
-# sys.path.append('/path/to/2014_07_13_test')
-# basedir = os.path.abspath(os.path.dirname(__file__))
-
 from datetime import datetime
 from concurrent import futures
-from app.schemas import ConnectionSchema
-from app.services import ConnectionService
+from schemas import ConnectionSchema
+from services import ConnectionService
 from typing import Optional, List
-from flask_accepts import responds
-
-# from . import grpc_server
-from app import connection_pb2
-from app import connection_pb2_grpc
+from connection_pb2 import ConnectionResponse
+import connection_pb2
+import connection_pb2_grpc
 from grpc_reflection.v1alpha import reflection
-import app
-
-# print(basedir, " is the path")
-
 
 DATE_FORMAT = "%Y-%m-%d"
 
-# api = Namespace("UdaConnect", description="Connections via geolocation.")
-# noqa
 logging.basicConfig(level=logging.INFO)
 
-
 class ConnectionDataResource(connection_pb2_grpc.ConnectionServiceServicer):
-    @responds(schema=ConnectionSchema, many=True)
+    # @responds(schema=ConnectionSchema, many=True)
     def GetConnection(self, request, context):
         person_id = request.person_id
         start_date = datetime.strptime(
             request.start_date, DATE_FORMAT)
         end_date = datetime.strptime(request.end_date, DATE_FORMAT)
-        meters = request.meters
-        with app.app_context():
-            results = ConnectionService.find_contacts(
-                person_id=person_id,
-                start_date=start_date,
-                end_date=end_date,
-                meters=meters,
-            )
+        distance = request.meters
+        print("person_id:", type(person_id),"\n",
+              "start_date:", type(start_date),"\n",
+              "end_date:", type(end_date), "\n",
+              "distance:", type(distance), "\n")
+        results = ConnectionService.find_contacts(
+            person_id=person_id,
+            start_date=start_date,
+            end_date=end_date,
+            meters=distance,
+        )
 
-            print("Hello there")
-            result = connection_pb2.ConnectionMessageList()
-            result.connections.extend(results)
-            # results = request.person_id
-            print(result, "These are the results returned from gRPC call to ConnectionService")
-            return result
+        print("Hello there")
+        # result = connection_pb2.ConnectionMessageList()
+        # result.connections.extend(results)
+        # results = request.person_id
+        print(result, "These are the results returned from gRPC call \
+            to ConnectionService")
+        return ConnectionResponse(connections=results)
 
-
-# grpc_server.serve()
-'''
-# Initialize gRPC server
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
+    connection_serve = ConnectionDataResource()
     connection_pb2_grpc.add_ConnectionServiceServicer_to_server(ConnectionDataResource(), server)
-
-    print("Server starting on port 5005...")
     SERVICE_NAMES = (
         connection_pb2.DESCRIPTOR.services_by_name['ConnectionService'].full_name,
         reflection.SERVICE_NAME,
     )
     reflection.enable_server_reflection(SERVICE_NAMES, server)
-
+    logging.log(logging.INFO, 'gRPC server starting on port 5005.')
     server.add_insecure_port("[::]:5005")
     server.start()
-    # Keep thread alive
     server.wait_for_termination()
 
-serve()
 
+if __name__ == '__main__':
+    serve()
 
+'''
 ////// Dummy Data
 
 
@@ -98,5 +84,5 @@ serve()
             end_date="2020-12-30",
             meters=5
         )
-        
+
 '''
