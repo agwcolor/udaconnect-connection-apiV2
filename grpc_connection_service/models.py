@@ -7,8 +7,6 @@ from shapely.geometry import Point
 from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, \
     Integer, String
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.dialects.postgresql import JSONB, UUID
-from sqlalchemy.types import Date
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
