@@ -9,6 +9,9 @@ from models import Connection, Location, Person
 from schemas import ConnectionSchema, LocationSchema, PersonSchema
 from geoalchemy2.functions import ST_AsText, ST_Point
 
+import connection_pb2
+import connection_pb2_grpc
+
 # ====================#
 # == Define db == #
 # ====================#
@@ -35,11 +38,11 @@ session = Session()
 logging.basicConfig(level=logging.DEBUG)
 
 
-class ConnectionService:
+class ConnectionService(connection_pb2_grpc.ConnectionServiceServicer):
     @staticmethod
     def find_contacts(person_id: int, start_date: datetime,
                       end_date: datetime, meters: int
-                      ) -> List[Connection]:
+                      ):
         """
         Finds all Person who have been within a given distance of a \
             given Person within a date range.
@@ -72,7 +75,7 @@ class ConnectionService:
         person_map: Dict[str, Person] = {person.id: person for person in
                                          PersonService.retrieve_all()}
 
-        # print("person_map :", person_map)
+        print("person_map  *** :", person_map, "\n\n")
         # Prepare arguments for queries
         data = []
         for location in locations:
@@ -96,7 +99,7 @@ class ConnectionService:
                     strftime("%Y-%m-%d"),
                 }
             )
-        # print("Data : ", data)
+        print("Data  *** : ", data, "\n\n")
         query = text(
             """
         SELECT  person_id, id, ST_X(coordinate), ST_Y(coordinate), creation_time
@@ -107,7 +110,9 @@ class ConnectionService:
         AND     TO_DATE(:end_date, 'YYYY-MM-DD') > creation_time;
         """
         )
-        result: List[Connection] = []
+        # result: List[Connection] = []
+        result = connection_pb2.ConnectionMessageList()
+        print("Type for result : ========> ", type(result))
         for line in tuple(data):
             for (
                 exposed_person_id,
@@ -122,14 +127,38 @@ class ConnectionService:
                     creation_time=exposed_time,
                 )
                 location.set_wkt_with_coords(exposed_lat, exposed_long)
+                # print("location **** ====> ", location)
                 # print(type(location.creation_time))
+                # print("person_map[exposed_person_id] ===>>> *** ", person_map[exposed_person_id], "\n\n\n\n")
+                # -------------------------------------
+                # map results to grpc protobuf types
+                location_proto = connection_pb2.Location()
+                location_proto.longitude = location.longitude
+                location_proto.latitude = location.latitude
+                location_proto.creation_time = (location.creation_time).strftime("%Y-%m-%d")
+                location_proto.id = location.id
 
-                result.append(
-                    Connection(
-                        person=person_map[exposed_person_id], location=location,
-                    )
-                )
-        # print(result)
+                exposed_person = person_map[exposed_person_id]
+                person_proto = connection_pb2.Person()
+                # print("person_proto type is =====> ", type(person_proto))
+                person_proto.id = exposed_person.id
+                person_proto.first_name = exposed_person.first_name
+                person_proto.last_name = exposed_person.last_name
+                person_proto.company_name = exposed_person.company_name
+
+                connection_proto = connection_pb2.Connection()
+
+                connection_proto.location.CopyFrom(location_proto)
+                connection_proto.person.CopyFrom(person_proto)
+                # print("connection_proto type is =====> ", type(connection_proto))
+                # print("This is the connection_proto", connection_proto)
+
+                result.connections.append(connection_proto)
+
+                # print("*******************", result, "******************")
+                # print("RESULT ====== \n\n\n\n\n\n\n")
+                # result.append(connection_proto)
+
         return result
 
 

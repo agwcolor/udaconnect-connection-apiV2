@@ -35,6 +35,10 @@ class ConnectionDataResource(connection_pb2_grpc.ConnectionServiceServicer):
             end_date=end_date,
             meters=distance,
         )
+        
+        print(type(results))
+        
+        '''
         print("results is type ===>  ", type(results))
 
         print("Hello there")
@@ -53,7 +57,9 @@ class ConnectionDataResource(connection_pb2_grpc.ConnectionServiceServicer):
         print("type(results[0].location.creation_time) => ", type(results[0].location.creation_time))
         # return ConnectionResponse(ConnectionMessageList, connections=results)
         # return[field.name for field in ConnectionResponse.DESCRIPTOR.fields]
-        return ConnectionMessageList(connections=results)
+        # my_connections = ConnectionMessageList(results)
+        '''
+        return results # ConnectionMessageList(connections=results)
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))

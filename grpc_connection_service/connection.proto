@@ -1,6 +1,4 @@
 syntax = "proto3";
-import "google/protobuf/timestamp.proto";
-
 
 message ConnectionMessage {
  int32 person_id = 1;
@@ -17,7 +15,7 @@ message Location {
   string longitude = 1;
   int32 person_id = 2;
   string latitude = 3;
-  google.protobuf.Timestamp creation_time = 4;
+  string creation_time = 4;
   int32 id = 5;
 }
 
@@ -32,6 +30,7 @@ message Connection {
   Location location = 1;
   Person person = 2;
 }
+
 
 message ConnectionMessageList {
   repeated Connection connections = 1;
