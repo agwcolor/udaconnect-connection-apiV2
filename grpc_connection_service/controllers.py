@@ -36,8 +36,8 @@ def serve():
         reflection.SERVICE_NAME,
     )
     reflection.enable_server_reflection(SERVICE_NAMES, server)
-    logging.log(logging.INFO, 'gRPC server starting on port 5005.')
-    server.add_insecure_port("[::]:5005")
+    logging.log(logging.INFO, 'gRPC server starting on port 50051.')
+    server.add_insecure_port("[::]:50051")
     server.start()
     server.wait_for_termination()
 
