@@ -4,7 +4,7 @@ import connection_pb2_grpc
 
 print("Sending sample payload...")
 
-channel = grpc.insecure_channel("localhost:5005", options=(('grpc.enable_http_proxy', 0),))
+channel = grpc.insecure_channel("localhost:30003", options=(('grpc.enable_http_proxy', 0),))
 connections_client = connection_pb2_grpc.ConnectionServiceStub(channel)
 
 # Update this with desired payload. Create a message and set values ...
