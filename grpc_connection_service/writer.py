@@ -4,6 +4,8 @@ import connection_pb2_grpc
 
 print("Sending sample payload...")
 
+# NOTE : The channel ip configured this way assumes that you are testing the grpc server from outside of the kubernetes cluster. Otherwise a deployed client channel ip would use the ip of the grpc service which on this cluster is: 10.43.255.199:5005.
+
 channel = grpc.insecure_channel("localhost:30003", options=(('grpc.enable_http_proxy', 0),))
 connections_client = connection_pb2_grpc.ConnectionServiceStub(channel)
 
